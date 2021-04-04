@@ -1,4 +1,4 @@
-package learnexone;
+package learnexone.equation;
 
 
 
