@@ -1,6 +1,10 @@
 package learnexone.dice;
 
 public interface Turnable {
-    public int doThrow();
-    public int calculateScore(int[] res);
+
+    //Бросить кубики
+    int doThrow();
+
+    //Подсчитать результат
+    int calculateScore(int[] res);
 }

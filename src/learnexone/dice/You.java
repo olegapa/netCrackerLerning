@@ -6,6 +6,7 @@ public class You extends Player
         implements Turnable{
     private final String name;
 
+    //Вводим имя игрока.
     You(int numDice){
         super();
         setnDice(numDice);
@@ -17,6 +18,12 @@ public class You extends Player
         System.out.println("Ok, " + name + ", you throw first. Pres enter to throw");
 
 
+    }
+
+    @Override
+    public void claimWin() {
+        super.claimWin();
+        System.out.println(name + " won this round! You have " + getWins() + " wins now\n");
     }
 
     @Override
@@ -32,6 +39,6 @@ public class You extends Player
 
     @Override
     void printTotalScore(int totalScore) {
-        System.out.println("\tWow, you total scor is: " + totalScore);
+        System.out.println("\tWow, your total score is: " + totalScore);
     }
 }
