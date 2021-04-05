@@ -2,7 +2,7 @@ package learnexone.dice;
 
 import java.util.Scanner;
 
-public class Game {
+abstract public class Game {
     //Количество игроков
     private static final int nPlayers = 3;
     //Массив игроков
@@ -41,6 +41,10 @@ public class Game {
         System.out.println("Input number of dice:");
         int numDice = in.nextInt();
 
+        if(numDice <= 0){
+            System.out.println("Can't play this figure of dices");
+            System.exit(-1);
+        }
         players = new Player[nPlayers];
         players[0] = new You(numDice);
 
