@@ -1,5 +1,5 @@
 package learnexone.adsress;
-
+//Адрес
 public class Address {
     private final String street;
     private final int house, flat;
@@ -22,6 +22,7 @@ public class Address {
         return flat;
     }
 
+    //Сравнивает два адреса
     @Override
     public boolean equals(Object obj) {
         if(this == obj)
@@ -32,6 +33,7 @@ public class Address {
         return false;
     }
 
+    //Печатает адрес
     public void printAdr(){
         System.out.println(street + ", house: " + house + ", flat: " + flat);
     }

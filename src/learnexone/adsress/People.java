@@ -10,6 +10,7 @@ public class People {
         this.people = people;
     }
 
+    //Поиск по адресу
     public List<Person> searchByAddress(Address adr){
         List<Person> ans = new ArrayList<>();
 
@@ -20,7 +21,7 @@ public class People {
 
         return ans;
     }
-
+    //Поиск по имени (возвращает место проживания этого человека)
     public Address searchByName(String name){
 
         for(Person i: people){
@@ -30,6 +31,7 @@ public class People {
         return null;
     }
 
+    //Ищет людей с днем рождения в указанном диапозоне
     public List<Person> searchByBirthdayRange(int[] date1, int[] date2){
         List<Person> ans = new ArrayList<>();
 
@@ -41,6 +43,7 @@ public class People {
         return ans;
     }
 
+    //Ищет самомго старого
     public Person findOldes(){
         Person ans = people[0];
 
@@ -51,6 +54,7 @@ public class People {
         return ans;
     }
 
+    //Ищет самого молодого
     public Person findYoungest(){
         Person ans = people[0];
 
@@ -61,6 +65,7 @@ public class People {
         return ans;
     }
 
+    //Ищет людей, проживающих на указанной улице
     public List<Person> searchByStreet(String street){
         List<Person> ans = new ArrayList<>();
 

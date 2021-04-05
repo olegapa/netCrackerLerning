@@ -2,6 +2,7 @@ package learnexone.adsress;
 
 import java.util.List;
 
+//Тесты!
 public class Main {
     public static void main(String[] args) {
         Address a1 = new Address("Park Avenue", 5, 8);

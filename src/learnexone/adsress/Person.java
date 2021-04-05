@@ -1,5 +1,6 @@
 package learnexone.adsress;
 
+//Человек
 public class Person {
 
     private final String name;
@@ -24,6 +25,7 @@ public class Person {
         return birthday;
     }
 
+    //Возвращает true если date позже чем день рождение этого человека
     public boolean isDateLater(int[] date){
         if(date[2] > birthday[2])
             return true;
@@ -38,6 +40,7 @@ public class Person {
         else return false;
     }
 
+    // Печатает всю информацию о этом человеке
     public void printInfo(){
         System.out.print(name + ", born: " + birthday[0] + "." + birthday[1] + "." + birthday[2] + " lives: ");
         adr.printAdr();
