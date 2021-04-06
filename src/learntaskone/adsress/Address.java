@@ -1,4 +1,4 @@
-package learnexone.adsress;
+package learntaskone.adsress;
 //Адрес
 public class Address {
     private final String street;

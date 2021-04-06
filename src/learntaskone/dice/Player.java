@@ -1,4 +1,4 @@
-package learnexone.dice;
+package learntaskone.dice;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package learnexone.adsress;
+package learntaskone.adsress;
 
 //Человек
 public class Person {

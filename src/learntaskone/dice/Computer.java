@@ -1,4 +1,4 @@
-package learnexone.dice;
+package learntaskone.dice;
 
 public class Computer extends Player
                     implements Turnable{

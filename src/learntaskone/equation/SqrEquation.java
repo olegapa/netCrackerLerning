@@ -1,4 +1,4 @@
-package learnexone.equation;
+package learntaskone.equation;
 
 
 
