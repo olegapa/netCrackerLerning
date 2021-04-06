@@ -1,4 +1,4 @@
-package learntasktwo;
+package learntasktwo.voice;
 
 public class Dog implements Voice{
     @Override

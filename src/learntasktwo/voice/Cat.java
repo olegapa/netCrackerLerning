@@ -1,4 +1,4 @@
-package learntasktwo;
+package learntasktwo.voice;
 
 public class Cat implements Voice{
     @Override
