@@ -10,7 +10,7 @@ public class Main {
 
         x.setColor("scarlet");
 
-        x.isBlack();
+        x.isBlack();    
     }
 
 
