@@ -1,18 +1,19 @@
 package ru.skillbench.tasks.text.regex;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CurriculumVitaeImpl implements CurriculumVitae{
     private String text;
     private static final String NAME_PATTERN =
-            "([A-Z][\\.a-z]+.?) (\\.a-z]+.?)? (\\.a-z]+.?)";
-    private String unhidenText;
+            "([A-Z][a-z.]+) ([A-Z][a-z.]+) *([A-Z][a-z.]+)?";
+    private Map<String, String> hiddenText;
 
     public CurriculumVitaeImpl(){
         text = null;
+
+        hiddenText = new HashMap<>();
     }
 
     @Override
@@ -37,16 +38,30 @@ public class CurriculumVitaeImpl implements CurriculumVitae{
         Matcher m = pat.matcher(text);
 
         while(m.find()){
-            String phNum = new String(m.group());
+            String phNum = m.group();
             int arCode;
-            int ext;
+            int ext = -1;
 
             if(!phNum.contains(m.group(1)))
                 arCode = -1;
-            else arCode = Integer.parseInt(m.group(1));
+            else arCode = Integer.parseInt(m.group(1).replaceAll("\\D", ""));
 
-            if(!phNum.contains(m.group(5))) ext = -1;
-            else ext = Integer.parseInt(phNum.split("\\.")[1]);
+            Pattern patternExt = Pattern.compile("ext\\.?\\s*([0-9]+)");
+            Matcher matcherExt = patternExt.matcher(m.group());
+
+            if(matcherExt.find()) {
+                String extensionTmp = "" + matcherExt.group();
+
+                patternExt = Pattern.compile("[0-9]+");
+                matcherExt = patternExt.matcher(extensionTmp);
+                try {
+                    matcherExt.find();
+                    ext = Integer.parseInt(matcherExt.group());
+
+                } catch (NumberFormatException | IllegalStateException e1) {
+                    System.out.println("NumberFormatException | IllegalStateException");
+                }
+            }
 
             phones.add(new Phone(phNum, arCode, ext));
         }
@@ -61,7 +76,7 @@ public class CurriculumVitaeImpl implements CurriculumVitae{
         Matcher m = pat.matcher(text);
 
         if(!m.find())
-            throw new IllegalStateException();
+            throw new NoSuchElementException();
 
         return m.group();
     }
@@ -74,7 +89,7 @@ public class CurriculumVitaeImpl implements CurriculumVitae{
         Matcher m = pat.matcher(text);
 
         if(!m.find())
-            throw new IllegalStateException();
+            throw new NoSuchElementException();
 
         return m.group(1);
     }
@@ -87,7 +102,7 @@ public class CurriculumVitaeImpl implements CurriculumVitae{
         Matcher m = pat.matcher(text);
 
         if(!m.find())
-            throw new IllegalStateException();
+            throw new NoSuchElementException();
         if(m.group().split(" ").length == 2)
             return null;
         return m.group(2);
@@ -101,7 +116,7 @@ public class CurriculumVitaeImpl implements CurriculumVitae{
         Matcher m = pat.matcher(text);
 
         if(!m.find())
-            throw new IllegalStateException();
+            throw new NoSuchElementException();
         if(m.group().split(" ").length == 2)
             return m.group(2);
         return m.group(3);
@@ -115,12 +130,12 @@ public class CurriculumVitaeImpl implements CurriculumVitae{
         Matcher m = pat.matcher(text);
 
         if(!m.find())
-            throw new IllegalStateException();
+            throw new NoSuchElementException();
 
         if(m.group().split(" ").length == 2)
-            text = new String(text.replace(m.group(2), newLastName));
+            text = text.replace(m.group(2), newLastName);
 
-        else text = new String(text.replace(m.group(3), newLastName));
+        else text = text.replace(m.group(3), newLastName);
     }
 
     @Override
@@ -129,10 +144,9 @@ public class CurriculumVitaeImpl implements CurriculumVitae{
             throw new IllegalStateException();
 
         if(!text.contains(oldPhone.toString()))
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
 
-        text = new String(text.replace(oldPhone.toString(), newPhone.toString()));
-
+        text = text.replace(oldPhone.toString(), newPhone.toString());
     }
 
     @Override
@@ -140,20 +154,43 @@ public class CurriculumVitaeImpl implements CurriculumVitae{
         if(text == null)
             throw new IllegalStateException();
 
-        if(!text.contains(piece))
-            throw new IllegalStateException();
+        Pattern pat = Pattern.compile(piece);
+        Matcher m = pat.matcher(text);
+        if(!m.find())
+            throw new IllegalArgumentException();
 
-        unhidenText = new String(text);
-        text.
+        String hide = piece.replaceAll("\\w", "X");
+        hiddenText.put(piece, hide);
+        setText(m.replaceAll(hide));
     }
 
     @Override
     public void hidePhone(String phone) {
+        if(text == null)
+            throw new IllegalStateException();
 
+        if(!text.contains(phone))
+            throw new IllegalArgumentException();
+
+        String hide = phone.replaceAll("\\d", "X");
+        hiddenText.put(phone, hide);
+
+        setText(text.replaceAll(phone, hide));
     }
 
     @Override
     public int unhideAll() {
-        return 0;
+        if(text == null)
+            throw new IllegalStateException();
+
+        int res = hiddenText.size();
+
+        Set<String> keys = hiddenText.keySet();
+        for(String k: keys){
+            setText(text.replaceAll(hiddenText.get(k), k));
+        }
+
+        hiddenText.clear();
+        return res;
     }
 }
