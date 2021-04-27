@@ -1,6 +1,6 @@
 package learntaskthree.address;
 
-public class Test {
+public class TestAdr {
     public static void main(String[] args) {
         Address a1 = new Address();
         a1.setAddrComma("Russia, Moscow district, Moscow, Raspletina street 9, 42");

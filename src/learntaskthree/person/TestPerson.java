@@ -1,6 +1,6 @@
 package learntaskthree.person;
 
-public class Test {
+public class TestPerson {
     public static void main(String[] args) {
         Person person = new Person(null, null, "Potekhin");
 
